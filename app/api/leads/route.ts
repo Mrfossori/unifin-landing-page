@@ -9,7 +9,7 @@ const leadSchema = z.object({
   mainChallenge: z.enum(["controlar_gastos", "saber_disponivel", "despesas_faculdade", "guardar_dinheiro", "renda_variavel", "outro"]),
   consent: z.literal(true),
   company: z.string().max(200).optional().default(""),
-  formStartedAt: z.number().int().positive(),
+  formElapsedMs: z.number().int().nonnegative(),
   utmSource: z.string().trim().max(120).optional().default(""),
   utmMedium: z.string().trim().max(120).optional().default(""),
   utmCampaign: z.string().trim().max(120).optional().default(""),
@@ -22,8 +22,7 @@ export async function POST(request: Request) {
     const parsed = leadSchema.safeParse(await request.json());
     if (!parsed.success) return Response.json({ ok: false, error: "Revise os campos e tente novamente." }, { status: 400 });
     const data = parsed.data;
-    const elapsed = Date.now() - data.formStartedAt;
-    if (data.company || elapsed < 1200 || elapsed > 86_400_000) return Response.json({ ok: true });
+    if (data.company || data.formElapsedMs < 1200 || data.formElapsedMs > 86_400_000) return Response.json({ ok: true });
     const email = data.email.toLowerCase();
     await getDb().insert(unifinLeads).values({
       firstName: data.firstName,

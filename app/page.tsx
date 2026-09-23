@@ -49,7 +49,7 @@ export default function Home() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    openedAt.current = Date.now();
+    openedAt.current = performance.now();
     const key = "unifin_view_session";
     let sessionId = sessionStorage.getItem(key);
     if (!sessionId) {
@@ -82,7 +82,7 @@ export default function Home() {
       mainChallenge: String(data.get("mainChallenge") ?? ""),
       consent,
       company: String(data.get("company") ?? ""),
-      formStartedAt: openedAt.current,
+      formElapsedMs: Math.round(performance.now() - openedAt.current),
       ...getAttribution(),
     };
     try {
