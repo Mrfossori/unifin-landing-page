@@ -23,9 +23,9 @@ Para testar os endpoints localmente, aplique a migração criada em `drizzle/` c
 
 ## Leads e acessos
 
-Os leads ficam na tabela `unifin_leads`. As visualizações ficam em `unifin_page_views`. O banco é acessado somente pelas rotas do servidor; o site não disponibiliza endpoints públicos de leitura, edição ou exclusão.
+Os leads ficam na tabela `unifin_leads`. As visualizações ficam em `unifin_page_views`. O banco é acessado somente pelas rotas do servidor; não existe endpoint público para listar, editar ou excluir os registros.
 
-No painel do Sites, abra o projeto **UNIFIN — Finanças para universitários**, entre em **Database** e selecione a tabela desejada. Registros com `is_test = 1` são testes técnicos e não devem entrar nas métricas da atividade.
+O responsável pelo projeto consulta os resultados em `/admin`, usando a senha armazenada como segredo `ADMIN_PASSWORD` no Sites. O painel mostra leads reais, acessos, conversão, testes e permite exportar CSV. Registros com `is_test = 1` são testes técnicos e não entram na conversão.
 
 ## Novo deploy
 
